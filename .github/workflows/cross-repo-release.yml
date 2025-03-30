@@ -1,0 +1,41 @@
+name: Cross-Repository Release
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+  #schedule:
+   # - cron: '0 0 * * *'  # Optional: Daily at midnight
+
+jobs:
+  download-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out current repository
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+
+      # 2. Download assets from source repository
+      - name: Download assets from source repo
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          github_token: ${{ secrets.SRC_REPO_ACCESS_TOKEN }}
+          workflow: release.yml  # Source repo's workflow file name
+          repo: saviynt/terraform-provider-saviynt  # Replace with source repo details
+          name: provider-binaries-*  # Artifact name in source repo
+          name_is_regexp: true
+          path: artifacts
+
+      # 3. Verify downloaded assets
+      - name: List downloaded files
+        run: ls -la artifacts/
+
+      # 4. Create release with assets
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_id }}  # Unique tag per run
+          name: "Cross-Repo Release ${{ github.run_id }}"
+          body: "Assets imported from source repository"
+          files: |
+            downloaded_assets/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Auto-generated token
