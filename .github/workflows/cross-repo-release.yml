@@ -14,15 +14,15 @@ jobs:
         uses: actions/checkout@v4
 
       # 2. Download assets from source repository
-      - name: Download assets from source repo
-        uses: dawidd6/action-download-artifact@v3
-        with:
-          github_token: ${{ secrets.SRC_REPO_ACCESS_TOKEN }}
-          workflow: release.yml  # Source repo's workflow file name
-          repo: saviynt/terraform-provider-saviynt  # Replace with source repo details
-          name: provider-binaries-*  # Artifact name in source repo
-          name_is_regexp: true
-          path: artifacts
+      #- name: Download assets from source repo
+      #  uses: dawidd6/action-download-artifact@v3
+      #  with:
+      #    github_token: ${{ secrets.SRC_REPO_ACCESS_TOKEN }}
+      #    workflow: release.yml  # Source repo's workflow file name
+      #    repo: saviynt/terraform-provider-saviynt  # Replace with source repo details
+      #    name: provider-binaries-*  # Artifact name in source repo
+      #    name_is_regexp: true
+      #    path: artifacts
 
       # 3. Verify downloaded assets
       - name: List downloaded files
