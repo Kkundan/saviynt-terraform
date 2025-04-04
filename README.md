@@ -34,7 +34,10 @@ Following connectors are available:
 ├── README.md
 ├── docs
 │   ├── data-sources
-│   │   ├── datasource_endpoints.md
+│   │   ├── ad_connection_datasource.md
+│   │   ├── connections_datasource.md
+│   │   ├── endpoints_datasource.md
+│   │   ├── rest_connection_datasource.md
 │   │   └── security_systems_datasource.md
 │   ├── index.md
 │   └── resources
@@ -58,7 +61,12 @@ Following connectors are available:
 │       ├── test.tfvars
 │       └── variable.tf
 ├── provider
-│   └── terraform-provider-saviynt_v0.1.1
+│   ├── terraform-provider-saviynt_0.1.2_darwin_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.2_darwin_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.2_linux_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.2_linux_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.2_windows_amd64.zip
+│   └── terraform-provider-saviynt_0.1.2_windows_arm64.zip
 ├── provider.tf
 └── resources
     ├── connections
@@ -227,7 +235,11 @@ As in the above example, to pass special characters like `$`, we have to use `$$
 ###  Data Source
 
 - [saviynt_security_systems_datasource](docs/data-sources/security_systems_datasource.md): Retrieves a list of configured security systems filtered by systemname, connection_type, etc.
-- [saviynt_datasource_endpoints](docs/data-sources/datasource_endpoints.md): Retrieves a list of endpoints.
+- [saviynt_endpoint_datasource](docs/data-sources/endpoints_datasource.md): Retrieves a list of endpoints.
+- [saviynt_connections_datasource](docs/data-sources/connections_datasource.md): Retrieves a list of connections
+- [saviynt_ad_connection_datasource](docs/data-sources/ad_connection_datasource.md): Retrieves an AD connection
+- [saviynt_rest_connection_datasource](docs/data-sources/rest_connection_datasource.md): Retrieves a REST connection
+
 
 ---
 
