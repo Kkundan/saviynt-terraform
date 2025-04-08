@@ -124,15 +124,124 @@ choco install golang
 #### **For Manual installation or other platforms**
 Visit [Go Setup](https://go.dev/doc/install) for installation instructions.
 
+### 3. Finding the GOBIN Folder Path
+
+#### **For macOS**
+
+To check the `GOBIN` path, run the following command in your terminal:
+
+```sh
+go env GOBIN
+```
+
+If it doesn't return anything, Go will use the default: `$GOPATH/bin`.
+
+To explicitly set `GOBIN`, you can update your shell configuration file (e.g., `~/.zshrc`, `~/.bashrc`, etc.). Below are steps for `~/.zshrc`:
+
+1. Open the file in your default editor:
+   ```sh
+   open ~/.zshrc
+   ```
+
+2. Add the following lines at the end of the file:
+   ```sh
+   export GOBIN=$HOME/go/bin
+   export PATH=$PATH:$GOBIN
+   ```
+
+3. Apply the changes:
+   ```sh
+   source ~/.zshrc
+   ```
+
+4. Confirm the value:
+   ```sh
+   go env GOBIN
+   ```
+
+You should now see the path as `$HOME/go/bin`.
+
+---
+
+#### **For Windows**
+
+To check the current `GOBIN` value, run the following in **Command Prompt** or **PowerShell**:
+
+```sh
+go env GOBIN
+```
+
+If it's empty, Go defaults to `%GOPATH%\bin`. To check `GOPATH`, run:
+
+```sh
+go env GOPATH
+```
+
+> The default path is usually: `C:\Users\<YourUsername>\go\bin`
+
+To explicitly set `GOBIN`, follow these steps:
+
+1. Open the **Start Menu** and search for **"Environment Variables"**.
+2. Click **"Edit the system environment variables"**.
+3. In the **System Properties** window, click **"Environment Variables…"**.
+4. Under **User variables**, click **"New…"** and enter:
+   - **Variable name**: `GOBIN`
+   - **Variable value**: `C:\Users\<YourUsername>\go\bin` (or your desired path)
+5. Add `GOBIN` to your system `Path`:
+   - Under **User variables**, select the `Path` variable and click **Edit**.
+   - Click **New** and add: `C:\Users\<YourUsername>\go\bin`
+6. Click **OK** to save and exit all dialogs.
+7. Restart your terminal or system.
+
+To verify:
+
+```sh
+go env GOBIN
+```
+
+You should now see the configured GOBIN path.
+
+
+Note: Save the GOBIN path for later use.
+
 To use this provider, follow these steps:  
 
-### **3. Download the Binary**  
+### **4. Download the Binary**  
 Copy the provider binary from provider directory to the Go bin directory: 
 
 ```sh
-cp provider/terraform-provider-saviynt_v0.1.1 <GOBIN PATH>/terraform-provider-saviynt
+cp provider/terraform-provider-saviynt_v0.1.3 <GOBIN PATH>/terraform-provider-saviynt
 chmod +x GOBIN/terraform-provider-saviynt
 
+```
+Replace `<GOBIN PATH>` with your actual GOBIN path where the go bin folder is located.
+
+### - macOS Security Warning Workaround
+
+When using the downloaded Terraform provider binary on macOS, you might encounter a security warning like:
+
+> `"Apple is not able to verify that it is free from malware that could harm your Mac or compromise your privacy. Don’t open this unless you are certain it is from a trustworthy source.`
+
+This happens because macOS restricts the execution of unsigned binaries.  
+To work around this, you can follow either of the options below:
+
+####  Option 1: Allow via System Settings
+
+1. Try running the provider binary once to trigger the security warning.
+2. Open **System Settings** → **Privacy & Security**.
+3. Scroll down to the **Security** section.
+4. You’ll see a message similar to:
+   > `"terraform-provider-saviynt" was blocked from use because it is not from an identified developer.`
+5. Click **"Allow Anyway"**.
+6. Re-run your Terraform command.
+7. If prompted again, click **"Open"** to allow execution.
+
+####  Option 2: Allow via Terminal
+
+You can also manually remove the quarantine attribute using the Terminal:
+
+```sh
+xattr -d com.apple.quarantine <path-to-binary>/terraform-provider-saviynt
 ```
 
 ### 4. Configure `.terraformrc` or `terraform.rc`
@@ -145,15 +254,126 @@ Create the file at:
 ```hcl
 provider_installation {
   dev_overrides {
-    "<PROVIDER SOURCE PATH>" = "<PATH>"
+    "<PROVIDER SOURCE PATH>" = "<GOBIN PATH>"
   }
   direct {}
 }
 ```
 
-Replace `<PATH>` and `<PROVIDER SOURCE PATH>` with your actual GOBIN path and the provider location respectively.
+### 5. Getting Started with Terraform
 
-### Terraform Configuration
+Follow the steps below to start using the Saviynt Terraform Provider:
+
+---
+
+#### **Step 1: Create a Terraform Project Folder**
+
+```sh
+mkdir saviynt-terraform-demo
+cd saviynt-terraform-demo
+```
+
+---
+
+#### **Step 2: Initialize a Terraform Configuration File**
+
+Create a file named `main.tf` and define your provider and resources:
+
+````hcl
+terraform {
+  required_providers {
+    saviynt = {
+      source  = "<PROVIDER SOURCE PATH>"
+      version = "1.0.0"
+    }
+  }
+}
+
+provider "saviynt" {
+  server_url  = "YOUR_SAVIYNT_URL"
+  username   = "YOUR_SAVIYNT_USERNAME"
+  password   = "YOUR_SAVIYNT_PASSWORD"
+}
+````
+
+Replace the `<PROVIDER SOURCE PATH>` with your provider path. The configuration should look similar to `registry.terraform.io/local/saviynt`.
+
+---
+
+#### **Step 3: Define Input Variables**
+
+Create a file called `variables.tf` to declare your input variables:
+
+```hcl
+variable "base_url" {
+  description = "Saviynt instance base URL"
+  type        = string
+  sensitive   = true
+}
+
+variable "auth_token" {
+  description = "Authentication token"
+  type        = string
+  sensitive   = true
+}
+```
+
+> You can refer to a sample `variables.tf` file in the `resources/connections/` folder for guidance.
+
+---
+
+#### **Step 4: Create a `terraform.tfvars` File**
+
+This file contains the actual values for the declared variables:
+
+```hcl
+base_url   = "https://your-saviynt-instance"
+auth_token = "your-auth-token"
+```
+
+> This file is automatically used by Terraform during plan and apply.
+
+You can also name the file `prod.tfvars`, `dev.tfvars`, etc. and explicitly reference it:
+
+```sh
+terraform apply -var-file="terraform.tfvars"
+```
+
+> Make sure to add `terraform.tfvars` to your `.gitignore` if it contains sensitive information:
+
+```sh
+echo "terraform.tfvars" >> .gitignore
+```
+
+---
+
+#### **Step 5: Validate & Apply Configuration**
+
+Validate the configuration:
+
+```sh
+terraform validate
+```
+
+Plan the changes:
+
+```sh
+terraform plan
+```
+
+Apply the changes:
+
+```sh
+terraform apply -var-file=terraform.tfvars
+```
+
+That's it! You've now set up and run your first configuration using the Saviynt Terraform Provider.
+
+
+
+
+
+<!-- ### Terraform Configuration
 
 ```hcl
 terraform {
@@ -172,7 +392,7 @@ provider "saviynt" {
 }
 ```
 
-Replace the `<PROVIDER SOURCE PATH>` with your provider path. The configuration should look similar to `registry.terraform.io/local/saviynt`.
+Replace the `<PROVIDER SOURCE PATH>` with your provider path. The configuration should look similar to `registry.terraform.io/local/saviynt`. -->
 
 ---
 
@@ -201,6 +421,8 @@ output "systems" {
   value = data.saviynt_security_systems_datasource.all.results
 }
 ```
+
+You can find the starter templates to define each supported resource type in the resource folder.
 
 For inputs that require JSON config, you can give the values as in the given example:
 ```sh
