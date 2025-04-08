@@ -265,7 +265,7 @@ You can also manually remove the quarantine attribute using the Terminal:
 xattr -d com.apple.quarantine <path-to-binary>/terraform-provider-saviynt
 ```
 
-### 4. Configure `.terraformrc` or `terraform.rc`
+### 5. Configure `.terraformrc` or `terraform.rc`
 
 Create the file at:
 
@@ -281,7 +281,7 @@ provider_installation {
 }
 ```
 
-### 5. Getting Started with Terraform
+### 6. Getting Started with Terraform
 
 Follow the steps below to start using the Saviynt Terraform Provider:
 
@@ -452,7 +452,7 @@ output "systems" {
 }
 ```
 
-You can find the starter templates to define each supported resource type in the resource folder.
+You can find the starter templates to define each supported resource type in the resource folder. To know the differnt types of arguments that can be passed for each resource, user can refer to ```docs/``` folder.
 
 For inputs that require JSON config, you can give the values as in the given example:
 ```sh
