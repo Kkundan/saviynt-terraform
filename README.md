@@ -349,6 +349,7 @@ This file contains the actual values for the declared variables:
 ```hcl
 server_url   = "https://your-saviynt-instance"
 username = "<USERNAME>"
+password = "<PASSWORD>
 ```
 
 > This file is automatically used by Terraform during plan and apply.
@@ -372,6 +373,7 @@ For example, in your provider configuration or resource definitions:
 provider "saviynt" {
   server_url = var.server_url
   username   = var.username
+  password = var.password
 }
 ```
 
@@ -452,7 +454,7 @@ output "systems" {
 }
 ```
 
-You can find the starter templates to define each supported resource type in the resource folder. To know the differnt types of arguments that can be passed for each resource, user can refer to ```docs/``` folder.
+You can find the starter templates to define each supported resource type in the resource folder. To know the differnt types of arguments that can be passed for each resource, user can refer to the ```docs/``` folder.
 
 For inputs that require JSON config, you can give the values as in the given example:
 ```sh
