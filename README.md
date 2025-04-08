@@ -202,11 +202,10 @@ go env GOBIN
 You should now see the configured GOBIN path.
 
 
-Note: Save the GOBIN path for later use.
+> **Note:** Save the GOBIN path for later use.
 
-To use this provider, follow these steps:  
 
-### **4. Download the Binary**  
+<!-- ### 4. Download the Binary
 Copy the provider binary from provider directory to the Go bin directory: 
 
 ```sh
@@ -214,7 +213,29 @@ cp provider/terraform-provider-saviynt_v0.1.3 <GOBIN PATH>/terraform-provider-sa
 chmod +x GOBIN/terraform-provider-saviynt
 
 ```
-Replace `<GOBIN PATH>` with your actual GOBIN path where the go bin folder is located.
+Replace `<GOBIN PATH>` with your actual GOBIN path where the go bin folder is located. -->
+
+### 4. Download the Binary
+
+Inside the `provider` directory, you will find multiple `.zip` files for different operating systems (e.g., macOS, Windows, Linux). Choose the appropriate binary for your OS, extract it, and copy the provider binary to your Go bin directory.
+
+For example, on macOS
+
+```sh
+# Unzip the appropriate binary
+unzip terraform-provider-saviynt_v0.1.3_darwin_amd64.zip -d provider/
+
+# Copy the binary to your GOBIN directory
+cp provider/terraform-provider-saviynt_v0.1.3 <GOBIN PATH>/terraform-provider-saviynt
+
+# Make it executable
+chmod +x <GOBIN PATH>/terraform-provider-saviynt
+```
+
+> **Note:** Replace `<GOBIN PATH>` with your actual GOBIN path. If you're unsure, run:
+```sh
+go env GOBIN
+```
 
 ### - macOS Security Warning Workaround
 
@@ -305,14 +326,13 @@ Replace the `<PROVIDER SOURCE PATH>` with your provider path. The configuration 
 Create a file called `variables.tf` to declare your input variables:
 
 ```hcl
-variable "base_url" {
+variable "server_url" {
   description = "Saviynt instance base URL"
   type        = string
-  sensitive   = true
 }
 
-variable "auth_token" {
-  description = "Authentication token"
+variable "username" {
+  description = "Username"
   type        = string
   sensitive   = true
 }
@@ -327,8 +347,8 @@ variable "auth_token" {
 This file contains the actual values for the declared variables:
 
 ```hcl
-base_url   = "https://your-saviynt-instance"
-auth_token = "your-auth-token"
+server_url   = "https://your-saviynt-instance"
+username = "<USERNAME>"
 ```
 
 > This file is automatically used by Terraform during plan and apply.
@@ -343,6 +363,16 @@ terraform apply -var-file="terraform.tfvars"
 
 ```sh
 echo "terraform.tfvars" >> .gitignore
+```
+
+**Important:** When using `tfvars`, you must refer to the variables using `var.<variable_name>` syntax in your `.tf` files.  
+For example, in your provider configuration or resource definitions:
+
+```hcl
+provider "saviynt" {
+  server_url = var.server_url
+  username   = var.username
+}
 ```
 
 ---
