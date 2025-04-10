@@ -74,12 +74,12 @@ Following connectors are available:
 │       ├── test.tfvars
 │       └── variable.tf
 ├── provider
-│   ├── terraform-provider-saviynt_0.1.3_darwin_amd64.zip
-│   ├── terraform-provider-saviynt_0.1.3_darwin_arm64.zip
-│   ├── terraform-provider-saviynt_0.1.3_linux_amd64.zip
-│   ├── terraform-provider-saviynt_0.1.3_linux_arm64.zip
-│   ├── terraform-provider-saviynt_0.1.3_windows_amd64.zip
-│   └── terraform-provider-saviynt_0.1.3_windows_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.4_darwin_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.4_darwin_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.4_linux_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.4_linux_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.4_windows_amd64.zip
+│   └── terraform-provider-saviynt_0.1.4_windows_arm64.zip
 ├── provider.tf
 └── resources
     ├── connections
