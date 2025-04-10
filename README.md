@@ -24,7 +24,10 @@ Following connectors are available:
 - REST
 - ADSI
 - Database(DB)
-
+- EntraID(AzureAD)
+- SAP
+- Salesforce
+- Workday
 ---
 
 ## Directory Structure
@@ -35,18 +38,28 @@ Following connectors are available:
 ├── docs
 │   ├── data-sources
 │   │   ├── ad_connection_datasource.md
+│   │   ├── adsi_connection_datasource.md
 │   │   ├── connections_datasource.md
+│   │   ├── db_connection_datasource.md
 │   │   ├── endpoints_datasource.md
+│   │   ├── entraid_connection_datasource.md
 │   │   ├── rest_connection_datasource.md
-│   │   └── security_systems_datasource.md
+│   │   ├── salesforce_connection_datasource.md
+│   │   ├── sap_connection_datasource.md
+│   │   ├── security_systems_datasource.md
+│   │   └── workday_connection_datasource.md
 │   ├── index.md
 │   └── resources
 │       ├── ad_connection_resource.md
 │       ├── adsi_connection_resource.md
 │       ├── db_connection_resource.md
 │       ├── endpoint_resource.md
+│       ├── entraid_connection_resource.md
 │       ├── rest_connection_resource.md
-│       └── security_system_resource.md
+│       ├── salesforce_connection_resource.md
+│       ├── sap_connection_resource.md
+│       ├── security_system_resource.md
+│       └── workday_connection_resource.md
 ├── environment
 │   ├── dev
 │   │   ├── dev.tf
@@ -61,12 +74,12 @@ Following connectors are available:
 │       ├── test.tfvars
 │       └── variable.tf
 ├── provider
-│   ├── terraform-provider-saviynt_0.1.2_darwin_amd64.zip
-│   ├── terraform-provider-saviynt_0.1.2_darwin_arm64.zip
-│   ├── terraform-provider-saviynt_0.1.2_linux_amd64.zip
-│   ├── terraform-provider-saviynt_0.1.2_linux_arm64.zip
-│   ├── terraform-provider-saviynt_0.1.2_windows_amd64.zip
-│   └── terraform-provider-saviynt_0.1.2_windows_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.3_darwin_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.3_darwin_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.3_linux_amd64.zip
+│   ├── terraform-provider-saviynt_0.1.3_linux_arm64.zip
+│   ├── terraform-provider-saviynt_0.1.3_windows_amd64.zip
+│   └── terraform-provider-saviynt_0.1.3_windows_arm64.zip
 ├── provider.tf
 └── resources
     ├── connections
@@ -485,6 +498,10 @@ As in the above example, to pass special characters like `$`, we have to use `$$
 - [saviynt_rest_connection_resource](docs/resources/rest_connection_resource.md): For managing REST connections.
 - [saviynt_adsi_connection_resource](docs/resources/adsi_connection_resource.md): For managing ADSI connections.
 - [saviynt_db_connection_resource](docs/resources/db_connection_resource.md): For managing DB connections.
+- [saviynt_entraid_connection_resource](docs/resources/entraid_connection_resource.md): For managing EntraID(AzureAD) connections.
+- [saviynt_sap_connection_resource](docs/resources/sap_connection_resource.md): For managing SAP connections.
+- [saviynt_salesforce_connection_resource](docs/resources/salesforce_connection_resource.md): For managing Salesforce connections.
+- [saviynt_workday_connection_resource](docs/resources/workday_connection_resource.md): For managing Workday connections.
 
 ###  Data Source
 
@@ -493,6 +510,11 @@ As in the above example, to pass special characters like `$`, we have to use `$$
 - [saviynt_connections_datasource](docs/data-sources/connections_datasource.md): Retrieves a list of connections
 - [saviynt_ad_connection_datasource](docs/data-sources/ad_connection_datasource.md): Retrieves an AD connection
 - [saviynt_rest_connection_datasource](docs/data-sources/rest_connection_datasource.md): Retrieves a REST connection
+- [saviynt_entraid_connection_datasource](docs/data-sources/entraid_connection_datasource.md): Retrieves a EntraID(AzureAD) connection
+- [saviynt_sap_connection_datasource](docs/data-sources/sap_connection_datasource.md): Retrieves a SAP connection
+- [saviynt_salesforce_connection_datasource](docs/data-sources/salesforce_connection_datasource.md): Retrieves a Salesforce connection
+- [saviynt_workday_connection_datasource](docs/data-sources/workday_connection_datasource.md): Retrieves a Workday connection
+
 
 
 ---
