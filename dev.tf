@@ -7,6 +7,12 @@ terraform {
   }
 }
 
+provider "saviynt" {
+  server_url = var.SAVIYNT_SERVER_URL
+  username = var.SAVIYNT_USERNAME
+  password = var.SAVIYNT_PASSWORD
+}
+
 # 3. Instantiate DB modules
 module "db_systems" {
   source = "./modules/db_systems"
@@ -42,11 +48,6 @@ module "db_systems" {
   endpoint_display_name = each.value.endpoint_display_name
 }
 
-provider "saviynt" {
-  server_url = var.SAVIYNT_SERVER_URL
-  username = var.SAVIYNT_USERNAME
-  password = var.SAVIYNT_PASSWORD
-}
 
 # 1. Load CSV
 locals {
