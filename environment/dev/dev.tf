@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     saviynt = {
-      source  = "PROVIDER PATH"
+      source  = "registry.terraform.io/local/saviynt"
       version = "1.0.0"
     }
   }
@@ -9,16 +9,16 @@ terraform {
 
 provider "saviynt" {
   server_url      = var.SAVIYNT_SERVER_URL
-  server_username = var.SAVIYNT_USERNAME
-  server_password = var.SAVIYNT_PASSWORD
+  username = var.SAVIYNT_USERNAME
+  password = var.SAVIYNT_PASSWORD
 }
 
 resource "saviynt_ad_connection_resource" "sample" {
   connection_type         = "AD"
   connection_name         = "YOUR_CONNECTION_NAME"
-  url                     = format("%s://%s:%d",var.LDAP_PROTOCOL, var.IP_ADDRESS, var.LDAP_PORT)
-  password                = var.PASSWORD
-  username                = var.USERNAME
+  url                     = format("%s://%s:%d","ldaps", "127.0.0.1", "363")
+  password                = "test@123"
+  username                = "testadmin"
   ldap_or_ad              = "AD"
-  base                    = var.BASE_CONTAINER
+  base                    = "ou=users,dc=example,dc=com"
 }
