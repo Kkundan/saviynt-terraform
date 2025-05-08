@@ -1,0 +1,3 @@
+system_name,display_name,hostname,port,access_add_workflow,connection_name,ldap_protocol,ip_address,ldap_port,bind_user,password,base_container,endpoint_name,endpoint_display_name
+sample_security_system,Sample Security System,sample.system.com,443,sample_workflow,sample-ad-connector,ldaps,192.168.1.100,636,"CN=binduser,DC=example,DC=com",SuperSecretPassword123!,"OU=Users,DC=example,DC=com",sample_endpoint,Sample Endpoint
+demo_security_system,Demo Security System,demo.system.com,443,demo_workflow,demo-ad-connector,ldaps,192.168.1.101,636,"CN=binduserdemo,DC=example,DC=com",AnotherSecretPwd456!,"OU=Admins,DC=example,DC=com",demo_endpoint,Demo Endpoint
