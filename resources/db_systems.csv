@@ -1,0 +1,5 @@
+system_name,display_name,hostname,port,access_add_workflow,connection_name,db_type,db_name,username,password,endpoint_name,endpoint_display_name
+mysql_prod,MySQL Production,mysql.prod.example.com,3306,DB_ACCESS_WF,mysql_prod_conn,MySQL,prod_db,admin,SecurePass123!,mysql_prod_ep,MySQL Production Endpoint
+mysql_dev,MySQL Development,mysql.dev.example.com,3306,DB_ACCESS_WF,mysql_dev_conn,MySQL,dev_db,admin,DevPass456!,mysql_dev_ep,MySQL Development Endpoint
+postgres_prod,PostgreSQL Production,postgres.prod.example.com,5432,DB_ACCESS_WF,postgres_prod_conn,PostgreSQL,prod_db,admin,PgSecurePass789!,postgres_prod_ep,PostgreSQL Production Endpoint
+oracle_prod,Oracle Production,oracle.prod.example.com,1521,DB_ACCESS_WF,oracle_prod_conn,Oracle,PRODDB,system,OraPass321!,oracle_prod_ep,Oracle Production Endpoint
