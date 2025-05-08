@@ -7,6 +7,41 @@ terraform {
   }
 }
 
+# 3. Instantiate DB modules
+module "db_systems" {
+  source = "./modules/db_systems"
+
+  for_each = {
+    for sys in local.db_systems_csv :
+    sys.system_name => {
+      display_name          = sys.display_name
+      hostname              = sys.hostname
+      port                  = tonumber(sys.port)
+      access_add_workflow   = sys.access_add_workflow
+      connection_name       = sys.connection_name
+      db_type              = sys.db_type
+      db_name              = sys.db_name
+      username             = sys.username
+      password             = sys.password
+      endpoint_name        = sys.endpoint_name
+      endpoint_display_name = sys.endpoint_display_name
+    }
+  }
+
+  system_name           = each.key
+  display_name          = each.value.display_name
+  hostname              = each.value.hostname
+  port                  = each.value.port
+  access_add_workflow   = each.value.access_add_workflow
+  connection_name       = each.value.connection_name
+  db_type              = each.value.db_type
+  db_name              = each.value.db_name
+  username             = each.value.username
+  password             = each.value.password
+  endpoint_name        = each.value.endpoint_name
+  endpoint_display_name = each.value.endpoint_display_name
+}
+
 provider "saviynt" {
   server_url = var.SAVIYNT_SERVER_URL
   username = var.SAVIYNT_USERNAME
@@ -15,12 +50,13 @@ provider "saviynt" {
 
 # 1. Load CSV
 locals {
-  # Read and parse the CSV file
-  systems_csv = csvdecode(file("C:/Users/kunda/OneDrive/Documents/work/GitHub/saviynt-terraform/resources/ad_systems.csv"))
+  # Read and parse the CSV files
+  ad_systems_csv = csvdecode(file("C:/Users/kunda/OneDrive/Documents/work/GitHub/saviynt-terraform/resources/ad_systems.csv"))
+  db_systems_csv = csvdecode(file("C:/Users/kunda/OneDrive/Documents/work/GitHub/saviynt-terraform/resources/db_systems.csv"))
 
-  # Transform into map with system name as key
-  systems = {
-    for sys in local.systems_csv :
+  # Transform AD systems into map
+  ad_systems = {
+    for sys in local.ad_systems_csv :
     sys.system_name => {
       display_name          = sys.display_name
       hostname              = sys.hostname
@@ -39,10 +75,9 @@ locals {
   }
 }
 
-# 2. Instantiate modules dynamically based on type
+# 2. Instantiate AD modules
 module "ad_systems" {
-
-  for_each = local.systems
+  for_each = local.ad_systems
 
   source = "./modules/ad_systems"  # wherever your module is
 
