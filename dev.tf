@@ -13,42 +13,6 @@ provider "saviynt" {
   password = var.SAVIYNT_PASSWORD
 }
 
-# 3. Instantiate DB modules
-module "db_systems" {
-  source = "./modules/db_systems"
-
-  for_each = {
-    for sys in local.db_systems_csv :
-    sys.system_name => {
-      display_name          = sys.display_name
-      hostname              = sys.hostname
-      port                  = tonumber(sys.port)
-      access_add_workflow   = sys.access_add_workflow
-      connection_name       = sys.connection_name
-      db_type              = sys.db_type
-      db_name              = sys.db_name
-      username             = sys.username
-      password             = sys.password
-      endpoint_name        = sys.endpoint_name
-      endpoint_display_name = sys.endpoint_display_name
-    }
-  }
-
-  system_name           = each.key
-  display_name          = each.value.display_name
-  hostname              = each.value.hostname
-  port                  = each.value.port
-  access_add_workflow   = each.value.access_add_workflow
-  connection_name       = each.value.connection_name
-  db_type              = each.value.db_type
-  db_name              = each.value.db_name
-  username             = each.value.username
-  password             = each.value.password
-  endpoint_name        = each.value.endpoint_name
-  endpoint_display_name = each.value.endpoint_display_name
-}
-
-
 # 1. Load CSV
 locals {
   # Read and parse the CSV files
@@ -97,5 +61,41 @@ module "ad_systems" {
   base_container        = each.value.base_container
 
   endpoint_name         = each.value.endpoint_name
+  endpoint_display_name = each.value.endpoint_display_name
+}
+
+
+# 3. Instantiate DB modules
+module "db_systems" {
+  source = "./modules/db_systems"
+
+  for_each = {
+    for sys in local.db_systems_csv :
+    sys.system_name => {
+      display_name          = sys.display_name
+      hostname              = sys.hostname
+      port                  = tonumber(sys.port)
+      access_add_workflow   = sys.access_add_workflow
+      connection_name       = sys.connection_name
+      db_type              = sys.db_type
+      db_name              = sys.db_name
+      username             = sys.username
+      password             = sys.password
+      endpoint_name        = sys.endpoint_name
+      endpoint_display_name = sys.endpoint_display_name
+    }
+  }
+
+  system_name           = each.key
+  display_name          = each.value.display_name
+  hostname              = each.value.hostname
+  port                  = each.value.port
+  access_add_workflow   = each.value.access_add_workflow
+  connection_name       = each.value.connection_name
+  db_type              = each.value.db_type
+  db_name              = each.value.db_name
+  username             = each.value.username
+  password             = each.value.password
+  endpoint_name        = each.value.endpoint_name
   endpoint_display_name = each.value.endpoint_display_name
 }
