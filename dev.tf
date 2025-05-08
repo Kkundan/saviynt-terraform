@@ -13,15 +13,21 @@ provider "saviynt" {
   password = var.SAVIYNT_PASSWORD
 }
 
-# 1. Load CSV
+variable "data_source_type" {
+  description = "Type of data source to use (csv or json)"
+  type        = string
+  default     = "csv"
+}
+
+# Load data based on source type
 locals {
-  # Read and parse the CSV files
-  ad_systems_csv = csvdecode(file("C:/Users/kunda/OneDrive/Documents/work/GitHub/saviynt-terraform/resources/ad_systems.csv"))
-  db_systems_csv = csvdecode(file("C:/Users/kunda/OneDrive/Documents/work/GitHub/saviynt-terraform/resources/db_systems.csv"))
+  # Read the appropriate data source
+  ad_systems_data = var.data_source_type == "csv" ? csvdecode(file("${path.module}/resources/ad_systems.csv")) : jsondecode(file("${path.module}/resources/ad_systems.json")).ad_systems
+  db_systems_csv = csvdecode(file("${path.module}/resources/db_systems.csv"))
 
   # Transform AD systems into map
   ad_systems = {
-    for sys in local.ad_systems_csv :
+    for sys in local.ad_systems_data :
     sys.system_name => {
       display_name          = sys.display_name
       hostname              = sys.hostname

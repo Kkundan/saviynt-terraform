@@ -1,0 +1,20 @@
+{
+  "ad_systems": [
+    {
+      "system_name": "ad_prod",
+      "display_name": "AD Production",
+      "hostname": "ad.prod.example.com",
+      "port": 389,
+      "access_add_workflow": "AD_ACCESS_WF",
+      "connection_name": "ad_prod_conn",
+      "ldap_protocol": "ldap",
+      "ip_address": "10.0.0.1",
+      "ldap_port": 389,
+      "bind_user": "CN=admin,DC=example,DC=com",
+      "password": "SecurePass123!",
+      "base_container": "DC=example,DC=com",
+      "endpoint_name": "ad_prod_ep",
+      "endpoint_display_name": "AD Production Endpoint"
+    }
+  ]
+}
